@@ -74,6 +74,23 @@ typedef void (^SPTPlaylistCreationCallback)(NSError *error, SPTPlaylistSnapshot 
 		 withAccessToken:(NSString *)accessToken
 				callback:(SPTRequestCallback)block;
 
+
+
+///---------------------------------
+/// @name Listing a user's playlists
+///---------------------------------
+
+/** Get the current user's playlist list.
+
+ See: https://developer.spotify.com/web-api/get-list-users-playlists/
+
+ @param accessToken An authenticated access token. Must be valid and authorized with the unspecified or `playlist-read-private` scope as necessary.
+ @param block The block to be called when the operation is complete. The block will pass an `SPTPlaylistList` object on success, otherwise an error.
+ */
++ (void)playlistsForCurrentUserWithAccessToken:(NSString *)accessToken
+									  callback:(SPTRequestCallback)block;
+
+
 ///------------------------------------------------
 /// @name Playlist listing request creation methods
 ///------------------------------------------------

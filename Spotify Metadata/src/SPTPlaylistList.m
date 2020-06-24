@@ -110,6 +110,19 @@
 
 }
 
++ (NSURLRequest *)createRequestForGettingPlaylistsForCurrentUserWithAccessToken:(NSString *)accessToken
+																		  error:(NSError **)error {
+	NSURL *lookupUrl = [NSURL URLWithString:@"https://api.spotify.com/v1/me/playlists"];
+	return [SPTRequest createRequestForURL:lookupUrl
+						   withAccessToken:accessToken
+								httpMethod:@"GET"
+									values:nil
+						   valueBodyIsJSON:NO
+					 sendDataAsQueryString:NO
+									 error:error];
+
+}
+
 + (void)playlistsForUser:(NSString *)username
 		 withAccessToken:(NSString *)accessToken
 				callback:(SPTRequestCallback)block {
@@ -117,6 +130,24 @@
 	NSURLRequest *req = [self createRequestForGettingPlaylistsForUser:username
 													  withAccessToken:accessToken
 																error:&reqerr];
+	SP_DISPATCH_ASYNC_BLOCK_AND_EXIT_IF_ERROR(reqerr);
+	[[SPTRequest sharedHandler] performRequest:req callback:^(NSError *error, NSURLResponse *response, NSData *data) {
+		if(error) {
+			block(error, nil);
+		}
+		else {
+			NSError *parseerr = nil;
+			SPTPlaylistList *list = [SPTPlaylistList playlistListFromData:data withResponse:response error:&parseerr];
+			block(parseerr,list);
+		}
+	}];
+}
+
++ (void)playlistsForCurrentUserWithAccessToken:(NSString *)accessToken
+									  callback:(SPTRequestCallback)block {
+	NSError *reqerr = nil;
+	NSURLRequest *req = [self createRequestForGettingPlaylistsForCurrentUserWithAccessToken:accessToken
+																					  error:&reqerr];
 	SP_DISPATCH_ASYNC_BLOCK_AND_EXIT_IF_ERROR(reqerr);
 	[[SPTRequest sharedHandler] performRequest:req callback:^(NSError *error, NSURLResponse *response, NSData *data) {
 		if(error) {
