@@ -20,7 +20,7 @@
 #import "SPTPlaylistList.h"
 #import "SPTListPage_Internal.h"
 #import "SPTFeaturedPlaylistList.h"
-#import "SPTFeaturedPlaylistList_Internal.h"
+#import "SPTFeaturedPlaylistList_internal.h"
 
 static NSString * const SPTAuthorizationHeaderKey = @"Authorization";
 NSString * const SPTMarketFromToken = @"from_token";

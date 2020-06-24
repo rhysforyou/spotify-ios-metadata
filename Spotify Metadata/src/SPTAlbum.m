@@ -229,7 +229,7 @@ static NSString * const SPTAlbumJSONExternalURLSpotifyKey = @"spotify";
 				components.day = [dateComponents[2] integerValue];
 				components.month = [dateComponents[1] integerValue];
 				components.year = [dateComponents[0] integerValue];
-				NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+				NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
 				self.releaseDate = [gregorian dateFromComponents:components];
 			}
 		}
