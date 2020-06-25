@@ -16,6 +16,7 @@
 
 #import "SPTPartialTrack.h"
 #import "SPTPartialAlbum.h"
+#import "SPTPartialArtist.h"
 #import "SPTJSONDecoding_Internal.h"
 
 static NSString * const SPTPartialTrackJSONIdKey = @"id";
@@ -41,7 +42,7 @@ static NSString * const SPTPartialTrackJSONPlayableKey = @"is_playable";
 @property (nonatomic, readwrite) NSTimeInterval duration;
 @property (nonatomic, readwrite, copy) NSURL *sharingURL;
 @property (nonatomic, readwrite, copy) NSURL *previewURL;
-@property (nonatomic, readwrite, copy) NSArray *artists;
+@property (nonatomic, readwrite, copy) NSArray<SPTPartialArtist *> *artists;
 @property (nonatomic, readwrite) NSInteger trackNumber;
 @property (nonatomic, readwrite) NSInteger discNumber;
 @property (nonatomic, readwrite) BOOL flaggedExplicit;

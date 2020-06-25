@@ -140,7 +140,8 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
  @param block The block to be called when the operation is started. This block will pass an error if the operation failed.
  */
 -(void)addTracksToPlaylist:(NSArray *)tracks
-		   withAccessToken:(NSString *)accessToken
+			  withUsername:(NSString *)username
+			   accessToken:(NSString *)accessToken
 				  callback:(SPTMetadataErrorableOperationCallback)block;
 
 /** Add tracks to the playlist at a certain position.
@@ -228,7 +229,8 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
  */
 + (NSURLRequest*)createRequestForAddingTracks:(NSArray *)tracks
 								   toPlaylist:(NSURL*)playlist
-							  withAccessToken:(NSString *)accessToken
+								 withUsername:(NSString *)username
+								  accessToken:(NSString *)accessToken
 										error:(NSError **)error;
 
 /** Create a request for adding tracks to the playlist at a certain position.

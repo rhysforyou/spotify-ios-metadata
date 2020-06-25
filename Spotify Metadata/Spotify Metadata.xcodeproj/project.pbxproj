@@ -519,7 +519,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "sh ../scripts/build_universal.sh";
+			shellScript = "sh ../scripts/build_universal.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -274,22 +274,26 @@ static NSString * const SPTPlaylistJSONDescriptionKey = @"description";
 }
 
 
-+ (NSURLRequest *)createRequestForAddingTracks:(NSArray *)tracks
-									toPlaylist:(NSURL *)playlist
-							   withAccessToken:(NSString *)accessToken
-										 error:(NSError **)error {
++ (NSURLRequest*)createRequestForAddingTracks:(NSArray *)tracks
+								   toPlaylist:(NSURL*)playlist
+								 withUsername:(NSString *)username
+								  accessToken:(NSString *)accessToken
+										error:(NSError **)error {
 	
-	NSString *userName = nil;
+	NSString *playlistUsername = nil;
 	NSString *playlistId = nil;
 	
 	NSArray *uriComponents = [[playlist absoluteString] componentsSeparatedByString:@":"];
 	if (uriComponents.count == 5) {
-		userName = uriComponents[2];
+		playlistUsername = uriComponents[2];
 		playlistId = uriComponents[4];
+	} else if (uriComponents.count == 3) {
+		playlistUsername = username;
+		playlistId = uriComponents[2];
 	}
 	
 	NSArray *trackURIs = [SPTTrack uriStringsFromArray:tracks];
-	NSURL *postUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.spotify.com/v1/users/%@/playlists/%@/tracks", userName, playlistId]];
+	NSURL *postUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.spotify.com/v1/users/%@/playlists/%@/tracks", playlistUsername, playlistId]];
 	
 	return [SPTRequest createRequestForURL:postUrl
 						   withAccessToken:accessToken
@@ -301,11 +305,12 @@ static NSString * const SPTPlaylistJSONDescriptionKey = @"description";
 }
 
 -(void)addTracksToPlaylist:(NSArray *)tracks
-		   withAccessToken:(NSString *)accessToken
+			  withUsername:(NSString *)username
+			   accessToken:(NSString *)accessToken
 				  callback:(SPTMetadataErrorableOperationCallback)block {
 	
 	NSError *reqerr = nil;
-	NSURLRequest *req = [SPTPlaylistSnapshot createRequestForAddingTracks:tracks toPlaylist:self.uri withAccessToken:accessToken error:&reqerr];
+	NSURLRequest *req = [SPTPlaylistSnapshot createRequestForAddingTracks:tracks toPlaylist:self.uri withUsername: username accessToken:accessToken error:&reqerr];
 	if (reqerr != nil) {
 		if (block) dispatch_async(dispatch_get_main_queue(), ^{ block(reqerr); });
 		return;

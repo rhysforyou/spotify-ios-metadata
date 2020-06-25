@@ -19,6 +19,7 @@
 #import "SPTPartialObject.h"
 #import "SPTTrackProvider.h"
 #import "SPTPartialAlbum.h"
+#import "SPTPartialArtist.h"
 
 /** Represents a "partial" track on the Spotify service. You can promote this
  to a full track object using `SPTTrack`.
@@ -53,7 +54,7 @@
 @property (nonatomic, readonly) NSTimeInterval duration;
 
 /** The artists of the track, as `SPTPartialArtist` objects. */
-@property (nonatomic, readonly, copy) NSArray *artists;
+@property (nonatomic, readonly, copy) NSArray<SPTPartialArtist *> *artists;
 
 /** The disc number of the track. I.e., if it's the first disc on the album this will be `1`. */
 @property (nonatomic, readonly) NSInteger discNumber;
